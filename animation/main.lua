@@ -1,6 +1,7 @@
 horizontalscale = 3
 rotation = 0
 x = 600
+y = 300
 love.graphics.setDefaultFilter('nearest', 'nearest')
 currentFrame = 1
 sprite = require 'animation'
@@ -27,18 +28,23 @@ function love.update(dt)
   elseif love.keyboard.isDown('s') then
     spriteS = sprite.walkDown
     coolT(spriteSpeed, dt)
+    y = y + 100 * dt
   elseif love.keyboard.isDown('a') then
     spriteS = sprite.walkSide
     horizontalscale = 3
     x = x - 100 * dt
     coolT(spriteSpeed, dt)
+  elseif love.keyboard.isDown('w') then
+    spriteS = sprite.walkUp
+    coolT(spriteSpeed, dt)
+    y = y - 100 * dt
   else
     currentFrame  = 1
   end
 end
 
 function love.draw()
-  love.graphics.draw(sprite.image,spriteS[math.floor(currentFrame)], x, 300, 0, horizontalscale, 3, 3, 0)
+  love.graphics.draw(sprite.image,spriteS[math.floor(currentFrame)], x, y, 0, horizontalscale, 3, 15/2, 22/2)
 end
 
 function coolT(speed,dt)
@@ -48,4 +54,8 @@ function coolT(speed,dt)
     currentFrame = 1
   end
   
+end
+
+function love.keypressed(k)
+  simpleK = true
 end
